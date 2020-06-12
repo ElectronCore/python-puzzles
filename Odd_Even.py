@@ -1,3 +1,4 @@
+ 
 def checkEven():
     flag1 = False
     while flag1 == False:
@@ -35,16 +36,19 @@ def checkDivisble():
         print(f"\nYes, {arg1} can be evenly divided by {arg2}.\n")
     else:
         print(f"\nNo you fool, you've killed us all. {arg1} cannot be evenly divided by {arg2}!\n")
-
+        
 def inputException():
     print("\nYou entered the wrong thing, idiot! Learn to follow instructions, baka!\n")
     return
 
-
-startSelect = input("\n\n\nWhat do you want to do?\nPress A to Check if a number is even or odd: \nPress B if a number can be evenly divisable by another:\n")
-if startSelect == 'a' or startSelect == 'A':
-    checkEven()
-elif startSelect == 'b' or startSelect == 'B':
-    checkDivisble()
-else:
-    inputException()
+startFlag = True
+while startFlag == True:
+    startSelect = input("\n\n\nWhat do you want to do?\nPress A to Check if a number is even or odd: \nPress B if a number can be evenly divisable by another:\n")
+    if startSelect == 'a' or startSelect == 'A':
+        checkEven()
+        startFlag = False
+    elif startSelect == 'b' or startSelect == 'B':
+        checkDivisble()
+        startFlag = False
+    else:
+        inputException()
