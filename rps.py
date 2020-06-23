@@ -1,110 +1,99 @@
-### HELP CODING HARD REEE
-### Figuring out how to make a function with a while loop that includes *potentially* more than one conditional but not *necessarily* is reeeee help.
-### My code probably looks super sloppy and dumb, let me know if my mind is still not object-oriented enough lol. Classes and object types still confuse me so I avoided those like the plague
+### Here's a really dumb rock-paper-scissors game! With waaaaaaaaay too much functionality. Oh well!
 
-def init(initType):  ### Initialization Function
+p1name = ""
+p2name = ""
+
+def init(initType = 0):  ### Initialization function
     if initType == 1:
         print("\nWelcome back! ")
-    startText = "Welcome to Rock, Paper, Scissors! Press J to continue... \n"
-    specInput("j", startText)
+    specInput("j", txt = "Welcome to Rock, Paper, Scissors! Press J to continue... \n")
     
     if initType == 1:
-        reuse()
+        nameInit = reuse()
+        names(nameInit)
+        play()
+    else:
+        names()
+        play()
 
-    p1name(input, reuse)
-    p2name(input, reuse)
+def names(nameCond = "Both"): ### Player name change function
+    global p1name
+    global p2name
+    if nameCond == "1":
+        p1name = input("Choose a name for Player 1...\n")
+    elif nameCond == "2":
+        p2name = input("Choose a name for Player 2...\n")
+    else:
+        p1name = input("Choose a name for Player 1...\n")
+        p2name = input("Choose a name for Player 2...\n")
 
-    play()
 
 def reuse():  ### Checking for player name reuse
-    reuseText = "Would you like to change your player names? (y/N)\n"
-    reuseCond = specInput("yn", reuseText)
-    print(reuseCond)
+    reuseCond = specInput("y", "n", txt = "Would you like to change your player names? (y/N)\n")
     if reuseCond == "y":
-        return
-    elif reuseCond == "n":
-        play()
+        nameInit = specInput("1", "2", "both", txt = "Which names would you like to change? (1/2/Both)\n")
+        return nameInit
+    else: play()
 
     
 
-def specInput(condition, inputText):  ### Function for specific input parameters; problem child when trying to add multiple conditions
-    keyInput = input(inputText)
-    keyInput = keyInput.lower()
-    totalCond = False
-    while totalCond == False:
-        keyInput = input(inputText)
-        keyInput = keyInput.lower()
-        for elem in condition:
-            totalCond = keyInput != elem
-    return keyInput
+def specInput(*condition, txt, errortxt = None):  ### Function for specific input parameters
+    if errortxt == None:
+        errortxt = txt
+    ioInput = input(txt)
+    ioInput = ioInput.lower()
+    
+    while ioInput not in condition:
+        ioInput = input(errortxt)
+        ioInput = ioInput.lower()
+        
+    return ioInput
 
-def p1name():  ### Eventual player 1 name function
-    return
+def play():  ### Main gameplay function
+    p1play = specInput("rock", "paper", "scissors", txt = f"{p1name}, choose Rock, Paper, or Scissors...\n", errortxt = f"That's not a valid move; {p1name}, choose Rock, Paper, or Scissors...\n")
+    p2play = specInput("rock", "paper", "scissors", txt = f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNow, {p2name}, choose Rock, Scissors, or Paper...\n", errortxt = f"That's not a valid move; {p2name}, choose Rock, Paper, or Scissors...\n")
+    if p1play == p2play:
+        tie()
+    if p1play == "rock":
+        if p2play == "paper":
+            p2(p2play, p1play)
+        if p2play == "scissors":
+            p1(p1play, p2play)
 
-def play():  ### Eventual main game function
-    print("you have played")
+    if p1play == "paper":
+        if p2play == "scissors":
+            p2(p2play, p1play)
+        if p2play == "rock":
+            p1(p1play, p2play)
 
+    if p1play == "scissors":
+        if p2play == "rock":
+            p2(p2play, p1play)
+        if p2play == "paper":
+            p1(p1play, p2play)
 
 ### Ending parameter functions:
 
-def tie():
+def tie():  ### A tie ending result
     print("Whoops! Looks like both players picked the same move. Try again!")
     end()
 
-def p1(winningMove, losingMove):
-    print(f"Player 1 wins! {winningMove.title()} wins against {losingMove.title()}!\n")
+def p1(winningMove, losingMove):  ### A player 1 winning ending result
+    print(f"{p1name} wins! {winningMove.title()} wins against {losingMove.title()}!\n")
     end()
 
-def p2(winningMove, losingMove):
-    print(f"Player 2 wins! {winningMove.title()} wins against {losingMove.title()}!\n")
+def p2(winningMove, losingMove):  ### A plater 2 winning ending result
+    print(f"{p2name} wins! {winningMove.title()} wins against {losingMove.title()}!\n")
     end()
 
-def end():
-    replayCond = input("Would you like to play again? (y/N)\n")
-    replayCond = replayCond.lower()
-    while replayCond != "y" and replayCond != "n":
-        replayCond = input("Would you like to play again? (y/N)\n")
-        replayCond = replayCond.lower()
+def end():  ### Final replay/exit function
+    replayCond = specInput("y", "n", txt = "Would you like to play again? (y/N)\n")
     
     if replayCond == "y":
         init(1)
     elif replayCond == "n":
         exit
 
-### Code execution and main logic; will eventually be packed into functions
+### Initialization function call
 
-init(0)
-
-player1choice = input("Player 1, choose Rock, Paper, or Scissors...\n")
-player1choice = player1choice.lower()
-while player1choice != "rock" and player1choice != "scissors" and player1choice != "paper":
-    player1choice = input("That's not a valid move; Player 1, choose Rock, Paper, or Scissors...\n")
-    player1choice = player1choice.lower()
-
-player2choice = input("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNow, Player 2, choose Rock, Scissors, or Paper...\n")
-player2choice = player2choice.lower()
-while player2choice != "rock" and player2choice != "scissors" and player2choice != "paper":
-    player2choice = input("That's not a valid move; Player 2, choose Rock, Paper, or Scissors...")
-    player2choice = player2choice.lower()
-
-#if
-if player1choice == player2choice:
-    tie()
-if player1choice == "rock":
-    if player2choice == "paper":
-        p2(player2choice, player1choice)
-    if player2choice == "scissors":
-        p1(player1choice, player2choice)
-
-if player1choice == "paper":
-    if player2choice == "scissors":
-        p2(player2choice, player1choice)
-    if player2choice == "rock":
-        p1(player1choice, player2choice)
-
-if player1choice == "scissors":
-    if player2choice == "rock":
-        p2(player2choice, player1choice)
-    if player2choice == "paper":
-        p1(player1choice, player2choice)
-
+init()
